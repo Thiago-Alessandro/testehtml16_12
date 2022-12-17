@@ -1,0 +1,75 @@
+   <!DOCTYPE html>
+    <html>
+    <head>
+      <style>
+        .calendar {
+          display: grid;
+          grid-template-columns: repeat(7, 1fr);
+          grid-gap: 10px;
+        }
+    
+        .day {
+          padding: 10px;
+          text-align: center;
+        }
+    
+        .between-dates {
+          background-color: #ccc;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>Calendar</h1>
+      <label for="start-date">Start Date:</label>
+      <input type="date" id="start-date">
+      <label for="end-date">End Date:</label>
+      <input type="date" id="end-date">
+      <button onclick="generateCalendar()">Generate Calendar</button>
+      <div id="calendar"></div>
+      <script>
+        function generateCalendar() {
+          // Get the start and end dates from the input fields
+          var startDate = new Date(document.getElementById("start-date").value);
+          var endDate = new Date(document.getElementById("end-date").value);
+    
+          // Get the current month and year
+          var month = startDate.getMonth();
+          var year = startDate.getFullYear();
+    
+          // Get the number of days in the current month
+          var numDays = new Date(year, month + 1, 0).getDate();
+    
+          // Create an array to store the days of the month
+          var days = [];
+    
+          // Loop through the days of the month and add them to the array
+          for (var i = 1; i <= numDays; i++) {
+            days.push(i);
+          }
+    
+          // Generate the HTML for the calendar
+          var calendarHTML = `<div class="calendar">`;
+    
+          // Loop through the days of the month and add them to the calendar
+          for (var i = 0; i < days.length; i++) {
+            var day = days[i];
+            var date = new Date(year, month, day);
+    
+            // Check if the current day is between the start and end dates
+            var isBetweenDates = date >= startDate && date <= endDate;
+    
+            // Add the appropriate CSS class to the day depending on whether it is between the start and end dates
+            var className = isBetweenDates ? "between-dates" : "";
+    
+            // Add the day to the calendar
+            calendarHTML += `<div class="day ${className}">${day}</div>`;
+          }
+    
+          calendarHTML += `</div>`;
+    
+          // Set the inner HTML of the calendar element to the generated HTML
+          document.getElementById("calendar").innerHTML = calendarHTML;
+        }
+      </script>
+    </body>
+    </html>
